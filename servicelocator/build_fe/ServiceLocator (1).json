@@ -1,19 +1,21 @@
 {
     "imports": [
         "github.com/project-flogo/flow",
+        "git.tibco.com/git/product/ipaas/wi-contrib.git/contributions/General/activity/log",
+        "github.com/TIBCOSoftware/GraphBuilder_Tools/activity/tablemutate",
+        "log_1 github.com/project-flogo/contrib/activity/log",
         "github.com/project-flogo/contrib/activity/actreturn",
-        "github.com/project-flogo/contrib/trigger/rest",
+        "github.com/TIBCOSoftware/GraphBuilder_Tools/activity/tablequery",
+        "github.com/TIBCOSoftware/GraphBuilder_Tools/activity/mapping",
+        "github.com/TIBCOSoftware/ModelOps/activity/httpclient",
+        "github.com/TIBCOSoftware/GraphBuilder_Tools/activity/jsondeserializer",
+        "github.com/TIBCOSoftware/GraphBuilder_Tools/activity/tableupsert",
+        "git.tibco.com/git/product/ipaas/wi-contrib.git/contributions/General/trigger/rest",
+        "github.com/TIBCOSoftware/ModelOps/trigger/httpredirect",
         "github.com/project-flogo/contrib/function/string",
-        "github.com/project-flogo/contrib/function/coerce",
         "github.com/project-flogo/contrib/function/array",
-        "github.com/SteveNY-Tibco/labs-lightcrane-contrib/activity/log",
-        "github.com/SteveNY-Tibco/labs-lightcrane-contrib/activity/tablemutate",
-        "github.com/SteveNY-Tibco/labs-lightcrane-contrib/activity/tablequery",
-        "github.com/SteveNY-Tibco/labs-lightcrane-contrib/activity/mapping",
-        "github.com/SteveNY-Tibco/labs-lightcrane-contrib/activity/httpclient",
-        "github.com/SteveNY-Tibco/labs-lightcrane-contrib/activity/jsondeserializer",
-        "github.com/SteveNY-Tibco/labs-lightcrane-contrib/trigger/httpredirect",
-        "github.com/SteveNY-Tibco/labs-lightcrane-contrib/function/f1"
+        "git.tibco.com/git/product/ipaas/wi-contrib.git/function/boolean",
+        "github.com/TIBCOSoftware/F1_Function/functions/f1"
     ],
     "name": "ServiceLocator",
     "description": "",
@@ -28,17 +30,20 @@
             "description": "Simple REST Trigger",
             "settings": {
                 "port": 10080,
-                "enableTLS": false,
-                "certFile": "",
-                "keyFile": ""
+                "APISpecUpdate": false,
+                "swagger": "",
+                "secureConnection": false,
+                "serverKey": "",
+                "caCertificate": ""
             },
             "id": "ReceiveHTTPMessage",
             "handlers": [
                 {
                     "description": "",
                     "settings": {
-                        "method": "POST",
-                        "path": "/f1/locator/register/:service"
+                        "Method": "POST",
+                        "Path": "/f1/locator/register/{service}",
+                        "OutputValidation": false
                     },
                     "action": {
                         "ref": "github.com/project-flogo/flow",
@@ -46,41 +51,11 @@
                             "flowURI": "res://flow:RegisterService"
                         },
                         "input": {
-                            "ID": "=$.content.ID",
-                            "URL": "=$.content.URL",
+                            "ID": "=$.body.ID",
+                            "URL": "=$.body.URL",
                             "Type": "=$.pathParams.service",
-                            "Location": "=$.content.Location",
-                            "Properties": "=$.content.Properties"
-                        },
-                        "output": {
-                            "data": {
-                                "mapping": {
-                                    "Response": "=$.Response"
-                                }
-                            }
-                        }
-                    },
-                    "reply": {
-                        "code": 200,
-                        "message": {}
-                    },
-                    "name": "RegisterService"
-                },
-                {
-                    "description": "",
-                    "settings": {
-                        "method": "POST",
-                        "path": "/f1/locator/unregister/:service"
-                    },
-                    "action": {
-                        "ref": "github.com/project-flogo/flow",
-                        "settings": {
-                            "flowURI": "res://flow:UnregisterService"
-                        },
-                        "input": {
-                            "ID": "=$.content.ID",
-                            "Type": "=$.pathParams.service",
-                            "Location": "=$.content.Location"
+                            "Properties": "=$.body.Properties",
+                            "Location": "=$.body.Location"
                         },
                         "output": {
                             "data": {
@@ -93,15 +68,114 @@
                     },
                     "reply": {
                         "code": 200,
+                        "configureResponseCodes": false,
                         "message": {}
+                    },
+                    "schemas": {
+                        "reply": {
+                            "data": {
+                                "type": "json",
+                                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Response\":{\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}}}",
+                                "fe_metadata": "{\n    \"Response\" : {\n    \"ID\" : \"\",\n    \"Type\" : \"\",\n    \"Location\" : \"\",\n    \"URL\" : \"\",\n    \"Properties\" : {}\n}\n}"
+                            },
+                            "responseBody": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}",
+                                "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}"
+                            }
+                        },
+                        "output": {
+                            "pathParams": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"service\":{\"type\":\"string\"}},\"required\":[]}",
+                                "fe_metadata": "[{\"parameterName\":\"service\",\"type\":\"string\"}]"
+                            },
+                            "headers": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"Accept\":{\"type\":\"string\",\"visible\":false},\"Accept-Charset\":{\"type\":\"string\",\"visible\":false},\"Accept-Encoding\":{\"type\":\"string\",\"visible\":false},\"Content-Type\":{\"type\":\"string\",\"visible\":false},\"Content-Length\":{\"type\":\"string\",\"visible\":false},\"Connection\":{\"type\":\"string\",\"visible\":false},\"Cookie\":{\"type\":\"string\",\"visible\":false},\"Pragma\":{\"type\":\"string\",\"visible\":false}},\"required\":[]}",
+                                "fe_metadata": "[{\"parameterName\":\"Accept\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Charset\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Encoding\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Type\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Length\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Connection\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Cookie\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Pragma\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false}]"
+                            },
+                            "body": {
+                                "type": "json",
+                                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}",
+                                "fe_metadata": "{\n    \"ID\" : \"\",\n    \"Location\" : \"\",\n    \"URL\" : \"\",\n    \"Properties\" : {}\n}"
+                            }
+                        }
+                    },
+                    "name": "RegisterService"
+                },
+                {
+                    "description": "",
+                    "settings": {
+                        "Method": "POST",
+                        "Path": "/f1/locator/unregister/{service}",
+                        "OutputValidation": false
+                    },
+                    "action": {
+                        "ref": "github.com/project-flogo/flow",
+                        "settings": {
+                            "flowURI": "res://flow:UnregisterService"
+                        },
+                        "input": {
+                            "ID": "=$.body.ID",
+                            "Type": "=$.pathParams.service"
+                        },
+                        "output": {
+                            "data": {
+                                "mapping": {
+                                    "Response": {
+                                        "ID": "=$.Response.ID",
+                                        "Type": "=$.Response.Type"
+                                    }
+                                }
+                            },
+                            "code": 200
+                        }
+                    },
+                    "reply": {
+                        "code": 200,
+                        "configureResponseCodes": false,
+                        "message": {}
+                    },
+                    "schemas": {
+                        "reply": {
+                            "data": {
+                                "type": "json",
+                                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Response\":{\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"}}}}}",
+                                "fe_metadata": "{\n    \"Response\" : {\n    \"ID\" : \"\",\n    \"Type\" : \"\"\n    }\n}"
+                            },
+                            "responseBody": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}",
+                                "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}"
+                            }
+                        },
+                        "output": {
+                            "pathParams": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"service\":{\"type\":\"string\"}},\"required\":[]}",
+                                "fe_metadata": "[{\"parameterName\":\"service\",\"type\":\"string\"}]"
+                            },
+                            "headers": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"Accept\":{\"type\":\"string\",\"visible\":false},\"Accept-Charset\":{\"type\":\"string\",\"visible\":false},\"Accept-Encoding\":{\"type\":\"string\",\"visible\":false},\"Content-Type\":{\"type\":\"string\",\"visible\":false},\"Content-Length\":{\"type\":\"string\",\"visible\":false},\"Connection\":{\"type\":\"string\",\"visible\":false},\"Cookie\":{\"type\":\"string\",\"visible\":false},\"Pragma\":{\"type\":\"string\",\"visible\":false}},\"required\":[]}",
+                                "fe_metadata": "[{\"parameterName\":\"Accept\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Charset\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Encoding\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Type\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Length\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Connection\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Cookie\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Pragma\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false}]"
+                            },
+                            "body": {
+                                "type": "json",
+                                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"}}}",
+                                "fe_metadata": "{\n    \"ID\" : \"\"\n}"
+                            }
+                        }
                     },
                     "name": "UnregisterService"
                 },
                 {
                     "description": "",
                     "settings": {
-                        "method": "GET",
-                        "path": "/f1/locator/list/:service"
+                        "Method": "GET",
+                        "Path": "/f1/locator/list/{service}",
+                        "OutputValidation": false
                     },
                     "action": {
                         "ref": "github.com/project-flogo/flow",
@@ -121,15 +195,43 @@
                     },
                     "reply": {
                         "code": 200,
+                        "configureResponseCodes": false,
                         "message": {}
+                    },
+                    "schemas": {
+                        "reply": {
+                            "data": {
+                                "type": "json",
+                                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Response\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"}}}}}}",
+                                "fe_metadata": "{\n    \"Response\" : [{\n    \"ID\" : \"\",\n    \"Type\" : \"\"\n}]\n}"
+                            },
+                            "responseBody": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}",
+                                "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}"
+                            }
+                        },
+                        "output": {
+                            "pathParams": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"service\":{\"type\":\"string\"}},\"required\":[]}",
+                                "fe_metadata": "[{\"parameterName\":\"service\",\"type\":\"string\"}]"
+                            },
+                            "headers": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"Accept\":{\"type\":\"string\",\"visible\":false},\"Accept-Charset\":{\"type\":\"string\",\"visible\":false},\"Accept-Encoding\":{\"type\":\"string\",\"visible\":false},\"Content-Type\":{\"type\":\"string\",\"visible\":false},\"Content-Length\":{\"type\":\"string\",\"visible\":false},\"Connection\":{\"type\":\"string\",\"visible\":false},\"Cookie\":{\"type\":\"string\",\"visible\":false},\"Pragma\":{\"type\":\"string\",\"visible\":false}},\"required\":[]}",
+                                "fe_metadata": "[{\"parameterName\":\"Accept\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Charset\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Encoding\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Type\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Length\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Connection\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Cookie\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Pragma\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false}]"
+                            }
+                        }
                     },
                     "name": "ListServices"
                 },
                 {
                     "description": "",
                     "settings": {
-                        "method": "GET",
-                        "path": "/f1/locator/locate/:ServiceType/:serviceID"
+                        "Method": "GET",
+                        "Path": "/f1/locator/locate/{ServiceType}/{serviceID}",
+                        "OutputValidation": false
                     },
                     "action": {
                         "ref": "github.com/project-flogo/flow",
@@ -146,15 +248,43 @@
                     },
                     "reply": {
                         "code": 200,
+                        "configureResponseCodes": false,
                         "message": {}
+                    },
+                    "schemas": {
+                        "reply": {
+                            "data": {
+                                "type": "json",
+                                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}",
+                                "fe_metadata": "{\n    \"ID\": \"\",\n    \"Type\": \"\",\n    \"URL\": \"\",\n    \"Properties\": {}\n}"
+                            },
+                            "responseBody": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}",
+                                "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}"
+                            }
+                        },
+                        "output": {
+                            "pathParams": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"ServiceType\":{\"type\":\"string\"},\"serviceID\":{\"type\":\"string\"}},\"required\":[]}",
+                                "fe_metadata": "[{\"parameterName\":\"ServiceType\",\"type\":\"string\"},{\"parameterName\":\"serviceID\",\"type\":\"string\"}]"
+                            },
+                            "headers": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"Accept\":{\"type\":\"string\",\"visible\":false},\"Accept-Charset\":{\"type\":\"string\",\"visible\":false},\"Accept-Encoding\":{\"type\":\"string\",\"visible\":false},\"Content-Type\":{\"type\":\"string\",\"visible\":false},\"Content-Length\":{\"type\":\"string\",\"visible\":false},\"Connection\":{\"type\":\"string\",\"visible\":false},\"Cookie\":{\"type\":\"string\",\"visible\":false},\"Pragma\":{\"type\":\"string\",\"visible\":false}},\"required\":[]}",
+                                "fe_metadata": "[{\"parameterName\":\"Accept\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Charset\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Encoding\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Type\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Length\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Connection\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Cookie\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Pragma\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false}]"
+                            }
+                        }
                     },
                     "name": "LocateService"
                 },
                 {
                     "description": "",
                     "settings": {
-                        "method": "GET",
-                        "path": "/f1/metadata/:name"
+                        "Method": "GET",
+                        "Path": "/f1/metadata/{name}",
+                        "OutputValidation": false
                     },
                     "action": {
                         "ref": "github.com/project-flogo/flow",
@@ -175,15 +305,43 @@
                     },
                     "reply": {
                         "code": 200,
+                        "configureResponseCodes": false,
                         "message": {}
+                    },
+                    "schemas": {
+                        "reply": {
+                            "data": {
+                                "type": "json",
+                                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Name\":{\"type\":\"string\"},\"Value\":{\"type\":\"object\",\"properties\":{}}}}",
+                                "fe_metadata": "{\n    \"Name\" : \"\",\n    \"Value\" : {}\n}"
+                            },
+                            "responseBody": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}",
+                                "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}"
+                            }
+                        },
+                        "output": {
+                            "pathParams": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"}},\"required\":[]}",
+                                "fe_metadata": "[{\"parameterName\":\"name\",\"type\":\"string\"}]"
+                            },
+                            "headers": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"Accept\":{\"type\":\"string\",\"visible\":false},\"Accept-Charset\":{\"type\":\"string\",\"visible\":false},\"Accept-Encoding\":{\"type\":\"string\",\"visible\":false},\"Content-Type\":{\"type\":\"string\",\"visible\":false},\"Content-Length\":{\"type\":\"string\",\"visible\":false},\"Connection\":{\"type\":\"string\",\"visible\":false},\"Cookie\":{\"type\":\"string\",\"visible\":false},\"Pragma\":{\"type\":\"string\",\"visible\":false}},\"required\":[]}",
+                                "fe_metadata": "[{\"parameterName\":\"Accept\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Charset\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Encoding\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Type\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Length\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Connection\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Cookie\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Pragma\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false}]"
+                            }
+                        }
                     },
                     "name": "GetMetadata"
                 },
                 {
                     "description": "",
                     "settings": {
-                        "method": "GET",
-                        "path": "/f1/locator/locationservices/:location/:service"
+                        "Method": "GET",
+                        "Path": "/f1/locator/list/{location}/{service}",
+                        "OutputValidation": false
                     },
                     "action": {
                         "ref": "github.com/project-flogo/flow",
@@ -205,11 +363,38 @@
                     },
                     "reply": {
                         "code": 200,
+                        "configureResponseCodes": false,
                         "message": {}
+                    },
+                    "schemas": {
+                        "reply": {
+                            "data": {
+                                "type": "json",
+                                "value": "{\n    \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n    \"type\": \"object\",\n    \"properties\": {\n        \"Response\": {\n            \"type\": \"array\",\n            \"items\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"ID\": {\n                        \"type\": \"string\"\n                    },\n                    \"Type\": {\n                        \"type\": \"string\"\n                    },\n                    \"Location\": {\n                        \"type\": \"string\"\n                    },\n                    \"URL\": {\n                        \"type\": \"string\"\n                    },\n                    \"Properties\": {\n                        \"type\": \"object\",\n                        \"properties\": {}\n                    }\n                }\n            }\n        }\n    }\n}",
+                                "fe_metadata": "{\n    \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n    \"type\": \"object\",\n    \"properties\": {\n        \"Response\": {\n            \"type\": \"array\",\n            \"items\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"ID\": {\n                        \"type\": \"string\"\n                    },\n                    \"Type\": {\n                        \"type\": \"string\"\n                    },\n                    \"Location\": {\n                        \"type\": \"string\"\n                    },\n                    \"URL\": {\n                        \"type\": \"string\"\n                    },\n                    \"Properties\": {\n                        \"type\": \"object\",\n                        \"properties\": {}\n                    }\n                }\n            }\n        }\n    }\n}"
+                            },
+                            "responseBody": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}",
+                                "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}"
+                            }
+                        },
+                        "output": {
+                            "pathParams": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"location\":{\"type\":\"string\"},\"service\":{\"type\":\"string\"}},\"required\":[]}",
+                                "fe_metadata": "[{\"parameterName\":\"location\",\"type\":\"string\"},{\"parameterName\":\"service\",\"type\":\"string\"}]"
+                            },
+                            "headers": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"Accept\":{\"type\":\"string\",\"visible\":false},\"Accept-Charset\":{\"type\":\"string\",\"visible\":false},\"Accept-Encoding\":{\"type\":\"string\",\"visible\":false},\"Content-Type\":{\"type\":\"string\",\"visible\":false},\"Content-Length\":{\"type\":\"string\",\"visible\":false},\"Connection\":{\"type\":\"string\",\"visible\":false},\"Cookie\":{\"type\":\"string\",\"visible\":false},\"Pragma\":{\"type\":\"string\",\"visible\":false}},\"required\":[]}",
+                                "fe_metadata": "[{\"parameterName\":\"Accept\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Charset\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Encoding\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Type\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Length\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Connection\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Cookie\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Pragma\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false}]"
+                            }
+                        }
                     },
                     "name": "ListServicesDetailsByLocation"
                 }
-			]
+            ]
         },
         {
             "ref": "#httpredirect",
@@ -294,7 +479,7 @@
                             "input": {
                                 "Log Level": "INFO",
                                 "flowInfo": false,
-                                "message": "=string.concat(\"^^^^^^ Register Service ^^^^^^ ID : \", $flow.ID, \", Type : \", $flow.Type, \", Location : \", $flow.Location, \", URL : \", $flow.URL, \", Properties : \", coerce.toString($flow.Properties))"
+                                "message": "=string.concat(\"^^^^^^ Register Service ^^^^^^ ID : \", $flow.ID, \", Type : \", $flow.Type, \"Location : \", $flow.Location, \"URL : \", $flow.URL, \", Properties : \", string.tostring($flow.Properties))"
                             }
                         }
                     },
@@ -316,7 +501,7 @@
                                     "iteratorMappings": {},
                                     "title": "Simple Table",
                                     "description": "This is URL file reader",
-                                    "ref": "github.com/SteveNY-Tibco/labs-lightcrane-contrib/connector/simpletable",
+                                    "ref": "github.com/TIBCOSoftware/GraphBuilder_Tools/connector/simpletable",
                                     "settings": [
                                         {
                                             "name": "name",
@@ -428,11 +613,10 @@
                         "name": "Log",
                         "description": "Logs a message",
                         "activity": {
-                            "ref": "#log",
+                            "ref": "#log_1",
                             "input": {
-                                "Log Level": "INFO",
-                                "flowInfo": false,
-                                "message": "=string.concat(\"^^^^^^ After Register Service ^^^^^^ Data : \", coerce.toString($activity[TableMutate].Data))"
+                                "message": "=string.tostring($activity[TableMutate].Data)",
+                                "addDetails": false
                             }
                         }
                     },
@@ -490,7 +674,11 @@
                                 "value": "{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}"
                             }
                         }
-                    ]
+                    ],
+                    "fe_metadata": {
+                        "input": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}",
+                        "output": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Response\":{\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}}}"
+                    }
                 },
                 "explicitReply": true
             }
@@ -555,7 +743,7 @@
                                     "iteratorMappings": {},
                                     "title": "Simple Table",
                                     "description": "This is URL file reader",
-                                    "ref": "github.com/SteveNY-Tibco/labs-lightcrane-contrib/connector/simpletable",
+                                    "ref": "github.com/TIBCOSoftware/GraphBuilder_Tools/connector/simpletable",
                                     "settings": [
                                         {
                                             "name": "name",
@@ -712,7 +900,11 @@
                                 "value": "{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"}}"
                             }
                         }
-                    ]
+                    ],
+                    "fe_metadata": {
+                        "input": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"}}}",
+                        "output": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Response\":{\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"}}}}}"
+                    }
                 },
                 "explicitReply": true
             }
@@ -754,7 +946,7 @@
                         "from": "LogQueryResult",
                         "to": "Return_Nothing",
                         "type": "exprOtherwise",
-                        "label": "LogQueryResult to Return_Nothing"
+                        "label": "LogQueryResulttoReturn_Nothing"
                     }
                 ],
                 "tasks": [
@@ -789,7 +981,7 @@
                                     "iteratorMappings": {},
                                     "title": "Simple Table",
                                     "description": "This is URL file reader",
-                                    "ref": "github.com/SteveNY-Tibco/labs-lightcrane-contrib/connector/simpletable",
+                                    "ref": "github.com/TIBCOSoftware/GraphBuilder_Tools/connector/simpletable",
                                     "settings": [
                                         {
                                             "name": "name",
@@ -901,7 +1093,7 @@
                             "input": {
                                 "Log Level": "INFO",
                                 "flowInfo": false,
-                                "message": "=string.concat(\"^^^^^^ Query Result ^^^^^^ TableQuery.Data : \", coerce.toString($activity[TableQuery].Data))"
+                                "message": "=string.concat(\"^^^^^^ Query Result ^^^^^^ TableQuery.Data : \", string.tostring($activity[TableQuery].Data))"
                             }
                         }
                     },
@@ -924,7 +1116,7 @@
                                 "Mapping": {
                                     "mapping": {
                                         "ArraySize": "=array.count($activity[TableQuery].Data)",
-                                        "SkipCondition": false,
+                                        "SkipCondition": "=boolean.false()",
                                         "Type": "=$iteration[value].ServiceType",
                                         "ID": "=$iteration[value].ServiceID",
                                         "Location": "=$iteration[value].LocationID"
@@ -998,13 +1190,13 @@
                             "type": "array",
                             "schema": {
                                 "type": "json",
-                                "value": "{\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"}}}"
+                                "value": "{\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"}}}"
                             }
                         }
                     ],
                     "fe_metadata": {
                         "input": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Type\":{\"type\":\"string\"}}}",
-                        "output": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Response\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"}}}}}}"
+                        "output": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Response\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"}}}}}}"
                     }
                 },
                 "explicitReply": true
@@ -1082,7 +1274,7 @@
                                     "iteratorMappings": {},
                                     "title": "Simple Table",
                                     "description": "This is URL file reader",
-                                    "ref": "github.com/SteveNY-Tibco/labs-lightcrane-contrib/connector/simpletable",
+                                    "ref": "github.com/TIBCOSoftware/GraphBuilder_Tools/connector/simpletable",
                                     "settings": [
                                         {
                                             "name": "name",
@@ -1195,7 +1387,7 @@
                             "input": {
                                 "Log Level": "INFO",
                                 "flowInfo": false,
-                                "message": "=string.concat(\"^^^^^^ Query Result ^^^^^^ TableQuery.Data : \", coerce.toString($activity[TableQuery].Data))"
+                                "message": "=string.concat(\"^^^^^^ Query Result ^^^^^^ TableQuery.Data : \", string.tostring($activity[TableQuery].Data))"
                             }
                         }
                     },
@@ -1218,7 +1410,7 @@
                                 "Mapping": {
                                     "mapping": {
                                         "ArraySize": "=array.count($activity[TableQuery].Data)",
-                                        "SkipCondition": false,
+                                        "SkipCondition": "=boolean.false()",
                                         "Type": "=$iteration[value].ServiceType",
                                         "ID": "=$iteration[value].ServiceID",
                                         "Location": "=$iteration[value].LocationID",
@@ -1301,7 +1493,11 @@
                                 "value": "{\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}"
                             }
                         }
-                    ]
+                    ],
+                    "fe_metadata": {
+                        "input": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"}}}",
+                        "output": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Response\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}}}}"
+                    }
                 },
                 "explicitReply": true
             }
@@ -1426,7 +1622,7 @@
                                     "iteratorMappings": {},
                                     "title": "Simple Table",
                                     "description": "This is URL file reader",
-                                    "ref": "github.com/SteveNY-Tibco/labs-lightcrane-contrib/connector/simpletable",
+                                    "ref": "github.com/TIBCOSoftware/GraphBuilder_Tools/connector/simpletable",
                                     "settings": [
                                         {
                                             "name": "name",
@@ -1457,7 +1653,7 @@
                                                 "type": "table",
                                                 "schema": "{\r\n    \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n    \"definitions\": {},\r\n    \"id\": \"http://example.com/example.json\",\r\n    \"items\": {\r\n        \"id\": \"/items\",\r\n        \"properties\": {\r\n            \"Name\": {\r\n                \"id\": \"/items/properties/Name\",\r\n                \"type\": \"string\"\r\n            },\r\n            \"Type\": {\r\n                \"id\": \"/items/properties/Type\",\r\n                \"type\": {\"enum\":[\"String\", \"Integer\", \"Long\", \"Double\", \"Boolean\", \"Date\", \"Object\"]}\r\n            },\r\n            \"IsKey\": {\r\n                \"id\": \"/items/properties/IsKey\",\r\n                \"type\": {\"enum\":[\"no\", \"yes\"]}\r\n            },\r\n            \"Indexed\": {\r\n                \"id\": \"/items/properties/Indexed\",\r\n                \"type\": {\"enum\":[\"no\", \"yes\"]}\r\n            }\r\n        },\r\n        \"type\": \"object\"\r\n    },\r\n    \"type\": \"array\"\r\n}"
                                             },
-                                            "value": "[{\"Name\":\"ServiceID\",\"Type\":\"String\",\"IsKey\":\"yes\",\"Indexed\":\"no\"},{\"Name\":\"ServiceType\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"yes\"},{\"Name\":\"Plateform\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"no\"},{\"Name\":\"URL\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"no\"},{\"Name\":\"Properties\",\"Type\":\"Object\",\"IsKey\":\"no\",\"Indexed\":\"no\"}]"
+                                            "value": "[{\"Name\":\"ServiceID\",\"Type\":\"String\",\"IsKey\":\"yes\",\"Indexed\":\"no\"},{\"Name\":\"ServiceType\",\"Type\":\"String\",\"IsKey\":\"yes\",\"Indexed\":\"no\"},{\"Name\":\"LocationID\",\"Type\":\"String\",\"IsKey\":\"yes\",\"Indexed\":\"no\"},{\"Name\":\"URL\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"no\"},{\"Name\":\"Properties\",\"Type\":\"Object\",\"IsKey\":\"no\",\"Indexed\":\"no\"}]"
                                         }
                                     ],
                                     "outputs": [],
@@ -1494,7 +1690,7 @@
                                     "schemaMap": {},
                                     "iteratorAccumulate": false,
                                     "isValid": true,
-                                    "lastUpdatedTime": 1609374841324,
+                                    "lastUpdatedTime": 1637691762447,
                                     "user": "flogo",
                                     "connectorName": "Services",
                                     "connectorDescription": " "
@@ -1556,8 +1752,7 @@
                                             "ID": "=$activity[FindServiceInLocator].Data[0].ServiceID",
                                             "Type": "=$activity[FindServiceInLocator].Data[0].ServiceType",
                                             "URL": "=$activity[FindServiceInLocator].Data[0].URL",
-                                            "Properties": "=$activity[FindServiceInLocator].Data[0].Properties",
-                                            "Location": "=$activity[FindServiceInLocator].Data[0].LocationID"
+                                            "Properties": "=$activity[FindServiceInLocator].Data[0].Properties"
                                         }
                                     }
                                 }
@@ -1608,7 +1803,7 @@
                                     "iteratorMappings": {},
                                     "title": "Simple Table",
                                     "description": "This is URL file reader",
-                                    "ref": "github.com/SteveNY-Tibco/labs-lightcrane-contrib/connector/simpletable",
+                                    "ref": "github.com/TIBCOSoftware/GraphBuilder_Tools/connector/simpletable",
                                     "settings": [
                                         {
                                             "name": "name",
@@ -1639,7 +1834,7 @@
                                                 "type": "table",
                                                 "schema": "{\r\n    \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n    \"definitions\": {},\r\n    \"id\": \"http://example.com/example.json\",\r\n    \"items\": {\r\n        \"id\": \"/items\",\r\n        \"properties\": {\r\n            \"Name\": {\r\n                \"id\": \"/items/properties/Name\",\r\n                \"type\": \"string\"\r\n            },\r\n            \"Type\": {\r\n                \"id\": \"/items/properties/Type\",\r\n                \"type\": {\"enum\":[\"String\", \"Integer\", \"Long\", \"Double\", \"Boolean\", \"Date\", \"Object\"]}\r\n            },\r\n            \"IsKey\": {\r\n                \"id\": \"/items/properties/IsKey\",\r\n                \"type\": {\"enum\":[\"no\", \"yes\"]}\r\n            },\r\n            \"Indexed\": {\r\n                \"id\": \"/items/properties/Indexed\",\r\n                \"type\": {\"enum\":[\"no\", \"yes\"]}\r\n            }\r\n        },\r\n        \"type\": \"object\"\r\n    },\r\n    \"type\": \"array\"\r\n}"
                                             },
-                                            "value": "[{\"Name\":\"ServiceID\",\"Type\":\"String\",\"IsKey\":\"yes\",\"Indexed\":\"no\"},{\"Name\":\"ServiceType\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"yes\"},{\"Name\":\"Plateform\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"no\"},{\"Name\":\"URL\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"no\"},{\"Name\":\"Properties\",\"Type\":\"Object\",\"IsKey\":\"no\",\"Indexed\":\"no\"}]"
+                                            "value": "[{\"Name\":\"ServiceID\",\"Type\":\"String\",\"IsKey\":\"yes\",\"Indexed\":\"no\"},{\"Name\":\"ServiceType\",\"Type\":\"String\",\"IsKey\":\"yes\",\"Indexed\":\"no\"},{\"Name\":\"LocationID\",\"Type\":\"String\",\"IsKey\":\"yes\",\"Indexed\":\"no\"},{\"Name\":\"URL\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"no\"},{\"Name\":\"Properties\",\"Type\":\"Object\",\"IsKey\":\"no\",\"Indexed\":\"no\"}]"
                                         }
                                     ],
                                     "outputs": [],
@@ -1676,7 +1871,7 @@
                                     "schemaMap": {},
                                     "iteratorAccumulate": false,
                                     "isValid": true,
-                                    "lastUpdatedTime": 1609374841324,
+                                    "lastUpdatedTime": 1637691762447,
                                     "user": "flogo",
                                     "connectorName": "Services",
                                     "connectorDescription": " "
@@ -1793,9 +1988,9 @@
                     {
                         "id": "SaveServiceInfo",
                         "name": "SaveServiceInfo",
-                        "description": "A simple activity for upserting/deleting data to/from table",
+                        "description": "A simple activity for upserting data to table",
                         "activity": {
-                            "ref": "#tablemutate",
+                            "ref": "#tableupsert",
                             "settings": {
                                 "Table": {
                                     "id": "c6215040-4aff-11eb-9ffb-8db6499bd1d7",
@@ -1808,7 +2003,7 @@
                                     "iteratorMappings": {},
                                     "title": "Simple Table",
                                     "description": "This is URL file reader",
-                                    "ref": "github.com/SteveNY-Tibco/labs-lightcrane-contrib/connector/simpletable",
+                                    "ref": "github.com/TIBCOSoftware/GraphBuilder_Tools/connector/simpletable",
                                     "settings": [
                                         {
                                             "name": "name",
@@ -1880,8 +2075,7 @@
                                     "user": "flogo",
                                     "connectorName": "Services",
                                     "connectorDescription": " "
-                                },
-                                "Method": "upsert"
+                                }
                             },
                             "input": {
                                 "Mapping": {
@@ -1897,15 +2091,15 @@
                                 "input": {
                                     "Mapping": {
                                         "type": "json",
-                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ServiceID\":{\"type\":\"string\"},\"ServiceType\":{\"type\":\"string\"},\"LocationID\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}",
-                                        "fe_metadata": "{\"ServiceID\":\"2\",\"ServiceType\":\"2\",\"LocationID\":\"2\",\"URL\":\"2\",\"Properties\":{}}"
+                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ServiceID\":{\"type\":\"string\"},\"ServiceType\":{\"type\":\"string\"},\"Plateform\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}",
+                                        "fe_metadata": "{\"ServiceID\":\"2\",\"ServiceType\":\"2\",\"Plateform\":\"2\",\"URL\":\"2\",\"Properties\":{}}"
                                     }
                                 },
                                 "output": {
                                     "Data": {
                                         "type": "json",
-                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"New\":{\"type\":\"object\",\"properties\":{\"ServiceID\":{\"type\":\"string\"},\"ServiceType\":{\"type\":\"string\"},\"LocationID\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}},\"Old\":{\"type\":\"object\",\"properties\":{\"ServiceID\":{\"type\":\"string\"},\"ServiceType\":{\"type\":\"string\"},\"LocationID\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}}}",
-                                        "fe_metadata": "{\"New\":{\"ServiceID\":\"2\",\"ServiceType\":\"2\",\"LocationID\":\"2\",\"URL\":\"2\",\"Properties\":{}},\"Old\":{\"ServiceID\":\"2\",\"ServiceType\":\"2\",\"LocationID\":\"2\",\"URL\":\"2\",\"Properties\":{}}}"
+                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ServiceID\":{\"type\":\"string\"},\"ServiceType\":{\"type\":\"string\"},\"Plateform\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}",
+                                        "fe_metadata": "{\"ServiceID\":\"2\",\"ServiceType\":\"2\",\"Plateform\":\"2\",\"URL\":\"2\",\"Properties\":{}}"
                                     }
                                 }
                             }
@@ -1921,11 +2115,10 @@
                                 "mappings": {
                                     "Response": {
                                         "mapping": {
-                                            "ID": "=$activity[SaveServiceInfo].Data.New.ServiceID",
-                                            "Type": "=$activity[SaveServiceInfo].Data.New.ServiceType",
-                                            "URL": "=$activity[SaveServiceInfo].Data.New.URL",
-                                            "Properties": "=$activity[SaveServiceInfo].Data.New.Properties",
-                                            "Location": "=$activity[SaveServiceInfo].Data.New.LocationID"
+                                            "ID": "=$activity[SaveServiceInfo].Data.ServiceID",
+                                            "Type": "=$activity[SaveServiceInfo].Data.ServiceType",
+                                            "URL": "=$activity[SaveServiceInfo].Data.URL",
+                                            "Properties": "=$activity[SaveServiceInfo].Data.Properties"
                                         }
                                     }
                                 }
@@ -1976,10 +2169,14 @@
                             "type": "object",
                             "schema": {
                                 "type": "json",
-                                "value": "{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}"
+                                "value": "{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}"
                             }
                         }
-                    ]
+                    ],
+                    "fe_metadata": {
+                        "input": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ServiceType\":{\"type\":\"string\"},\"ServiceID\":{\"type\":\"string\"}}}",
+                        "output": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Response\":{\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}}}"
+                    }
                 },
                 "explicitReply": true
             }
@@ -2091,7 +2288,7 @@
                         "name": "Log",
                         "description": "Logs a message",
                         "activity": {
-                            "ref": "#log",
+                            "ref": "#log_1",
                             "input": {
                                 "message": "=$flow.RequestURL",
                                 "addDetails": false
@@ -2116,7 +2313,7 @@
                                     "iteratorMappings": {},
                                     "title": "Simple Table",
                                     "description": "This is URL file reader",
-                                    "ref": "github.com/SteveNY-Tibco/labs-lightcrane-contrib/connector/simpletable",
+                                    "ref": "github.com/TIBCOSoftware/GraphBuilder_Tools/connector/simpletable",
                                     "settings": [
                                         {
                                             "name": "name",
@@ -2147,7 +2344,7 @@
                                                 "type": "table",
                                                 "schema": "{\r\n    \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n    \"definitions\": {},\r\n    \"id\": \"http://example.com/example.json\",\r\n    \"items\": {\r\n        \"id\": \"/items\",\r\n        \"properties\": {\r\n            \"Name\": {\r\n                \"id\": \"/items/properties/Name\",\r\n                \"type\": \"string\"\r\n            },\r\n            \"Type\": {\r\n                \"id\": \"/items/properties/Type\",\r\n                \"type\": {\"enum\":[\"String\", \"Integer\", \"Long\", \"Double\", \"Boolean\", \"Date\", \"Object\"]}\r\n            },\r\n            \"IsKey\": {\r\n                \"id\": \"/items/properties/IsKey\",\r\n                \"type\": {\"enum\":[\"no\", \"yes\"]}\r\n            },\r\n            \"Indexed\": {\r\n                \"id\": \"/items/properties/Indexed\",\r\n                \"type\": {\"enum\":[\"no\", \"yes\"]}\r\n            }\r\n        },\r\n        \"type\": \"object\"\r\n    },\r\n    \"type\": \"array\"\r\n}"
                                             },
-                                            "value": "[{\"Name\":\"ServiceID\",\"Type\":\"String\",\"IsKey\":\"yes\",\"Indexed\":\"no\"},{\"Name\":\"ServiceType\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"yes\"},{\"Name\":\"Plateform\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"no\"},{\"Name\":\"URL\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"no\"},{\"Name\":\"Properties\",\"Type\":\"Object\",\"IsKey\":\"no\",\"Indexed\":\"no\"}]"
+                                            "value": "[{\"Name\":\"ServiceID\",\"Type\":\"String\",\"IsKey\":\"yes\",\"Indexed\":\"no\"},{\"Name\":\"ServiceType\",\"Type\":\"String\",\"IsKey\":\"yes\",\"Indexed\":\"no\"},{\"Name\":\"LocationID\",\"Type\":\"String\",\"IsKey\":\"yes\",\"Indexed\":\"no\"},{\"Name\":\"URL\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"no\"},{\"Name\":\"Properties\",\"Type\":\"Object\",\"IsKey\":\"no\",\"Indexed\":\"no\"}]"
                                         }
                                     ],
                                     "outputs": [],
@@ -2184,7 +2381,7 @@
                                     "schemaMap": {},
                                     "iteratorAccumulate": false,
                                     "isValid": true,
-                                    "lastUpdatedTime": 1609374841324,
+                                    "lastUpdatedTime": 1637691762447,
                                     "user": "flogo",
                                     "connectorName": "Services",
                                     "connectorDescription": " "
@@ -2221,7 +2418,7 @@
                         "name": "PrintURL01",
                         "description": "Logs a message",
                         "activity": {
-                            "ref": "#log",
+                            "ref": "#log_1",
                             "input": {
                                 "message": "=$activity[TableQuery].Data[0].URL",
                                 "addDetails": false
@@ -2302,7 +2499,7 @@
                                     "iteratorMappings": {},
                                     "title": "Simple Table",
                                     "description": "This is URL file reader",
-                                    "ref": "github.com/SteveNY-Tibco/labs-lightcrane-contrib/connector/simpletable",
+                                    "ref": "github.com/TIBCOSoftware/GraphBuilder_Tools/connector/simpletable",
                                     "settings": [
                                         {
                                             "name": "name",
@@ -2333,7 +2530,7 @@
                                                 "type": "table",
                                                 "schema": "{\r\n    \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n    \"definitions\": {},\r\n    \"id\": \"http://example.com/example.json\",\r\n    \"items\": {\r\n        \"id\": \"/items\",\r\n        \"properties\": {\r\n            \"Name\": {\r\n                \"id\": \"/items/properties/Name\",\r\n                \"type\": \"string\"\r\n            },\r\n            \"Type\": {\r\n                \"id\": \"/items/properties/Type\",\r\n                \"type\": {\"enum\":[\"String\", \"Integer\", \"Long\", \"Double\", \"Boolean\", \"Date\", \"Object\"]}\r\n            },\r\n            \"IsKey\": {\r\n                \"id\": \"/items/properties/IsKey\",\r\n                \"type\": {\"enum\":[\"no\", \"yes\"]}\r\n            },\r\n            \"Indexed\": {\r\n                \"id\": \"/items/properties/Indexed\",\r\n                \"type\": {\"enum\":[\"no\", \"yes\"]}\r\n            }\r\n        },\r\n        \"type\": \"object\"\r\n    },\r\n    \"type\": \"array\"\r\n}"
                                             },
-                                            "value": "[{\"Name\":\"ServiceID\",\"Type\":\"String\",\"IsKey\":\"yes\",\"Indexed\":\"no\"},{\"Name\":\"ServiceType\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"yes\"},{\"Name\":\"Plateform\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"no\"},{\"Name\":\"URL\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"no\"},{\"Name\":\"Properties\",\"Type\":\"Object\",\"IsKey\":\"no\",\"Indexed\":\"no\"}]"
+                                            "value": "[{\"Name\":\"ServiceID\",\"Type\":\"String\",\"IsKey\":\"yes\",\"Indexed\":\"no\"},{\"Name\":\"ServiceType\",\"Type\":\"String\",\"IsKey\":\"yes\",\"Indexed\":\"no\"},{\"Name\":\"LocationID\",\"Type\":\"String\",\"IsKey\":\"yes\",\"Indexed\":\"no\"},{\"Name\":\"URL\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"no\"},{\"Name\":\"Properties\",\"Type\":\"Object\",\"IsKey\":\"no\",\"Indexed\":\"no\"}]"
                                         }
                                     ],
                                     "outputs": [],
@@ -2370,7 +2567,7 @@
                                     "schemaMap": {},
                                     "iteratorAccumulate": false,
                                     "isValid": true,
-                                    "lastUpdatedTime": 1609374841324,
+                                    "lastUpdatedTime": 1637691762447,
                                     "user": "flogo",
                                     "connectorName": "Services",
                                     "connectorDescription": " "
@@ -2408,7 +2605,7 @@
                         "name": "PrintURL02",
                         "description": "Logs a message",
                         "activity": {
-                            "ref": "#log",
+                            "ref": "#log_1",
                             "input": {
                                 "message": "=$activity[QueryByTypeNdID].Data[0].URL",
                                 "addDetails": false
@@ -2500,7 +2697,7 @@
                                     "iteratorMappings": {},
                                     "title": "Simple Table",
                                     "description": "This is URL file reader",
-                                    "ref": "github.com/SteveNY-Tibco/labs-lightcrane-contrib/connector/simpletable",
+                                    "ref": "github.com/TIBCOSoftware/GraphBuilder_Tools/connector/simpletable",
                                     "settings": [
                                         {
                                             "name": "name",
@@ -2629,5 +2826,7 @@
         }
     ],
     "properties": [],
-    "connections": {}
+    "connections": {},
+    "contrib": "W3sicmVmIjoiZ2l0LnRpYmNvLmNvbS9naXQvcHJvZHVjdC9pcGFhcy93aS1jb250cmliLmdpdC9jb250cmlidXRpb25zL0dlbmVyYWwiLCJzM2xvY2F0aW9uIjoiVGliY28vR2VuZXJhbCJ9LHsicmVmIjoiZ2l0aHViLmNvbS9wcm9qZWN0LWZsb2dvL2NvbnRyaWIvYWN0aXZpdHkvbG9nIiwiczNsb2NhdGlvbiI6IntVU0VSSUR9L0RlZmF1bHQvYWN0aXZpdHkvbG9nIn0seyJyZWYiOiJnaXRodWIuY29tL1RJQkNPU29mdHdhcmUvR3JhcGhCdWlsZGVyX1Rvb2xzIiwiczNsb2NhdGlvbiI6IntVU0VSSUR9L0dyYXBoQnVpbGRlcl9Ub29scyJ9LHsicmVmIjoiZ2l0aHViLmNvbS9USUJDT1NvZnR3YXJlL01vZGVsT3BzIiwiczNsb2NhdGlvbiI6IntVU0VSSUR9L01vZGVsT3BzIn0seyJyZWYiOiJnaXRodWIuY29tL1RJQkNPU29mdHdhcmUvRjFfRnVuY3Rpb24vZnVuY3Rpb25zL2YxIiwiczNsb2NhdGlvbiI6ImZsb2dvL2YxL2Z1bmN0aW9ucy9mMSJ9XQ==",
+    "fe_metadata": "UEsDBAoAAAAIAGOZd1OrqSRGFQAAABMAAAAIAAAAYXBwLmpzb26rViopykxPTy1yy8kvL1ayio6tBQBQSwECFAAKAAAACABjmXdTq6kkRhUAAAATAAAACAAAAAAAAAAAAAAAAAAAAAAAYXBwLmpzb25QSwUGAAAAAAEAAQA2AAAAOwAAAAAA"
 }

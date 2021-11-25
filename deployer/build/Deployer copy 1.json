@@ -742,6 +742,66 @@
                         }
                     }
                 ],
+                "errorHandler": {
+                    "tasks": [
+                        {
+                            "id": "CreateDeployDescriptorReport",
+                            "name": "CreateDeployDescriptorReport",
+                            "description": "Simple SubFlow Activity",
+                            "activity": {
+                                "ref": "#subflow",
+                                "settings": {
+                                    "flowURI": "res://flow:StatusReport"
+                                },
+                                "input": {
+                                    "ID": "",
+                                    "Type": "deployment",
+                                    "URL": "",
+                                    "Properties": {
+                                        "mapping": {
+                                            "Status": "Deploy Fail",
+                                            "Reporter": "Deployer",
+                                            "LastModified": 1234567890,
+                                            "ErrorCode": 400,
+                                            "ErrorMessage": "=$error.message"
+                                        }
+                                    }
+                                },
+                                "schemas": {
+                                    "input": {
+                                        "input": {
+                                            "type": "json",
+                                            "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "id": "Return",
+                            "name": "Return",
+                            "description": "Simple Return Activity",
+                            "activity": {
+                                "ref": "#actreturn",
+                                "settings": {
+                                    "mappings": {
+                                        "Success": "=false",
+                                        "ErrorCode": 400,
+                                        "Message": "=$error.message"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "id": 5,
+                            "from": "CreateDeployDescriptorReport",
+                            "to": "Return",
+                            "type": "default"
+                        }
+                    ]
+                },
                 "metadata": {
                     "input": [
                         {
@@ -1547,6 +1607,66 @@
                         }
                     }
                 ],
+                "errorHandler": {
+                    "tasks": [
+                        {
+                            "id": "EnvokeScriptErrorReport",
+                            "name": "EnvokeScriptErrorReport",
+                            "description": "Simple SubFlow Activity",
+                            "activity": {
+                                "ref": "#subflow",
+                                "settings": {
+                                    "flowURI": "res://flow:StatusReport"
+                                },
+                                "input": {
+                                    "ID": "",
+                                    "Type": "deployment",
+                                    "URL": "",
+                                    "Properties": {
+                                        "mapping": {
+                                            "Status": "Deploy Fail",
+                                            "Reporter": "Deployer",
+                                            "LastModified": 1234567890,
+                                            "ErrorCode": 400,
+                                            "ErrorMessage": "=$error.message"
+                                        }
+                                    }
+                                },
+                                "schemas": {
+                                    "input": {
+                                        "input": {
+                                            "type": "json",
+                                            "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "id": "Return",
+                            "name": "Return",
+                            "description": "Simple Return Activity",
+                            "activity": {
+                                "ref": "#actreturn",
+                                "settings": {
+                                    "mappings": {
+                                        "Success": "=false",
+                                        "ErrorCode": 400,
+                                        "Message": "=$error.message"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "id": 14,
+                            "from": "EnvokeScriptErrorReport",
+                            "to": "Return",
+                            "type": "default"
+                        }
+                    ]
+                },
                 "metadata": {
                     "input": [
                         {
@@ -1752,6 +1872,66 @@
                         }
                     }
                 ],
+                "errorHandler": {
+                    "tasks": [
+                        {
+                            "id": "F1DescriptorReport",
+                            "name": "F1DescriptorReport",
+                            "description": "Simple SubFlow Activity",
+                            "activity": {
+                                "ref": "#subflow",
+                                "settings": {
+                                    "flowURI": "res://flow:StatusReport"
+                                },
+                                "input": {
+                                    "ID": "",
+                                    "Type": "deployment",
+                                    "URL": "",
+                                    "Properties": {
+                                        "mapping": {
+                                            "Status": "Deploy Fail",
+                                            "Reporter": "Deployer",
+                                            "LastModified": 1234567890,
+                                            "ErrorCode": 400,
+                                            "ErrorMessage": "=$error.message"
+                                        }
+                                    }
+                                },
+                                "schemas": {
+                                    "input": {
+                                        "input": {
+                                            "type": "json",
+                                            "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "id": "Return",
+                            "name": "Return",
+                            "description": "Simple Return Activity",
+                            "activity": {
+                                "ref": "#actreturn",
+                                "settings": {
+                                    "mappings": {
+                                        "Success": "=false",
+                                        "ErrorCode": 400,
+                                        "Message": "=$error.message"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "id": 4,
+                            "from": "F1DescriptorReport",
+                            "to": "Return",
+                            "type": "default"
+                        }
+                    ]
+                },
                 "metadata": {
                     "input": [
                         {
@@ -1983,6 +2163,66 @@
                         }
                     }
                 ],
+                "errorHandler": {
+                    "tasks": [
+                        {
+                            "id": "DeployF1Descriptor2ErrorReport",
+                            "name": "DeployF1Descriptor2ErrorReport",
+                            "description": "Simple SubFlow Activity",
+                            "activity": {
+                                "ref": "#subflow",
+                                "settings": {
+                                    "flowURI": "res://flow:StatusReport"
+                                },
+                                "input": {
+                                    "ID": "",
+                                    "Type": "deployment",
+                                    "URL": "",
+                                    "Properties": {
+                                        "mapping": {
+                                            "Status": "Deploy Fail",
+                                            "Reporter": "Deployer",
+                                            "LastModified": 1234567890,
+                                            "ErrorCode": 400,
+                                            "ErrorMessage": "=$error.message"
+                                        }
+                                    }
+                                },
+                                "schemas": {
+                                    "input": {
+                                        "input": {
+                                            "type": "json",
+                                            "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "id": "Return",
+                            "name": "Return",
+                            "description": "Simple Return Activity",
+                            "activity": {
+                                "ref": "#actreturn",
+                                "settings": {
+                                    "mappings": {
+                                        "Success": "=false",
+                                        "ErrorCode": 400,
+                                        "Message": "=string.concat(\"Deployer::Deploy F1 Descriptor - \", $error.message)"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "id": 5,
+                            "from": "DeployF1Descriptor2ErrorReport",
+                            "to": "Return",
+                            "type": "default"
+                        }
+                    ]
+                },
                 "metadata": {
                     "input": [
                         {
@@ -2283,6 +2523,66 @@
                         }
                     }
                 ],
+                "errorHandler": {
+                    "tasks": [
+                        {
+                            "id": "UnregisterErrorReport",
+                            "name": "UnregisterErrorReport",
+                            "description": "Simple SubFlow Activity",
+                            "activity": {
+                                "ref": "#subflow",
+                                "settings": {
+                                    "flowURI": "res://flow:StatusReport"
+                                },
+                                "input": {
+                                    "ID": "",
+                                    "Type": "deployment",
+                                    "URL": "",
+                                    "Properties": {
+                                        "mapping": {
+                                            "Status": "Deploy Fail",
+                                            "Reporter": "Deployer",
+                                            "LastModified": 1234567890,
+                                            "ErrorCode": 400,
+                                            "ErrorMessage": "=$error.message"
+                                        }
+                                    }
+                                },
+                                "schemas": {
+                                    "input": {
+                                        "input": {
+                                            "type": "json",
+                                            "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "id": "Return",
+                            "name": "Return",
+                            "description": "Simple Return Activity",
+                            "activity": {
+                                "ref": "#actreturn",
+                                "settings": {
+                                    "mappings": {
+                                        "Success": "=false",
+                                        "ErrorCode": 400,
+                                        "Message": "=string.concat(\"Deployer::Unregister - \", $error.message)"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "id": 6,
+                            "from": "UnregisterErrorReport",
+                            "to": "Return",
+                            "type": "default"
+                        }
+                    ]
+                },
                 "metadata": {
                     "input": [
                         {
@@ -2610,6 +2910,66 @@
                         }
                     }
                 ],
+                "errorHandler": {
+                    "tasks": [
+                        {
+                            "id": "DeployErrorReport",
+                            "name": "DeployErrorReport",
+                            "description": "Simple SubFlow Activity",
+                            "activity": {
+                                "ref": "#subflow",
+                                "settings": {
+                                    "flowURI": "res://flow:StatusReport"
+                                },
+                                "input": {
+                                    "ID": "",
+                                    "Type": "deployment",
+                                    "URL": "",
+                                    "Properties": {
+                                        "mapping": {
+                                            "Status": "Deploy Fail",
+                                            "Reporter": "Deployer",
+                                            "LastModified": 1234567890,
+                                            "ErrorCode": 400,
+                                            "ErrorMessage": "=$error.message"
+                                        }
+                                    }
+                                },
+                                "schemas": {
+                                    "input": {
+                                        "input": {
+                                            "type": "json",
+                                            "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "id": "Return",
+                            "name": "Return",
+                            "description": "Simple Return Activity",
+                            "activity": {
+                                "ref": "#actreturn",
+                                "settings": {
+                                    "mappings": {
+                                        "Success": "=false",
+                                        "ErrorCode": 400,
+                                        "Message": "=string.concat(\"Deployer::Deploy - \", $error.message)"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "id": 8,
+                            "from": "DeployErrorReport",
+                            "to": "Return",
+                            "type": "default"
+                        }
+                    ]
+                },
                 "metadata": {
                     "input": [
                         {
@@ -2956,6 +3316,85 @@
                         }
                     }
                 ],
+                "errorHandler": {
+                    "tasks": [
+                        {
+                            "id": "LogUndeployError",
+                            "name": "LogUndeployError",
+                            "description": "Simple Log Message Activity",
+                            "activity": {
+                                "ref": "#log",
+                                "input": {
+                                    "Log Level": "INFO",
+                                    "flowInfo": false,
+                                    "message": "=string.concat(\"########## Undeploy Error ########## activity : \", $error.activity, \", message : \", $error.message, \", data : \", $error.data)"
+                                }
+                            }
+                        },
+                        {
+                            "id": "UndeployErrorReport",
+                            "name": "UndeployErrorReport",
+                            "description": "Simple SubFlow Activity",
+                            "activity": {
+                                "ref": "#subflow",
+                                "settings": {
+                                    "flowURI": "res://flow:StatusReport"
+                                },
+                                "input": {
+                                    "ID": "",
+                                    "Type": "deployment",
+                                    "URL": "",
+                                    "Properties": {
+                                        "mapping": {
+                                            "Status": "Deploy Fail",
+                                            "Reporter": "Deployer",
+                                            "LastModified": 1234567890,
+                                            "ErrorCode": 400,
+                                            "ErrorMessage": "=$error.message"
+                                        }
+                                    }
+                                },
+                                "schemas": {
+                                    "input": {
+                                        "input": {
+                                            "type": "json",
+                                            "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "id": "Return",
+                            "name": "Return",
+                            "description": "Simple Return Activity",
+                            "activity": {
+                                "ref": "#actreturn",
+                                "settings": {
+                                    "mappings": {
+                                        "Success": "=false",
+                                        "ErrorCode": 400,
+                                        "Message": "=string.concat(\"Deployer::Undeploy - \", $error.message)"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "id": 8,
+                            "from": "LogUndeployError",
+                            "to": "UndeployErrorReport",
+                            "type": "default"
+                        },
+                        {
+                            "id": 9,
+                            "from": "UndeployErrorReport",
+                            "to": "Return",
+                            "type": "default"
+                        }
+                    ]
+                },
                 "metadata": {
                     "input": [
                         {
@@ -3192,6 +3631,85 @@
                         }
                     }
                 ],
+                "errorHandler": {
+                    "tasks": [
+                        {
+                            "id": "LogF1DeployError",
+                            "name": "LogF1DeployError",
+                            "description": "Simple Log Message Activity",
+                            "activity": {
+                                "ref": "#log",
+                                "input": {
+                                    "Log Level": "INFO",
+                                    "flowInfo": false,
+                                    "message": "=string.concat(\"########## Deploy F1 Descriptor Error ########## ProjectID : \", $flow.ProjectID)"
+                                }
+                            }
+                        },
+                        {
+                            "id": "DeployF1DescriptorErrorReport",
+                            "name": "DeployF1DescriptorErrorReport",
+                            "description": "Simple SubFlow Activity",
+                            "activity": {
+                                "ref": "#subflow",
+                                "settings": {
+                                    "flowURI": "res://flow:StatusReport"
+                                },
+                                "input": {
+                                    "ID": "",
+                                    "Type": "deployment",
+                                    "URL": "",
+                                    "Properties": {
+                                        "mapping": {
+                                            "Status": "Deploy Fail",
+                                            "Reporter": "Deployer",
+                                            "LastModified": 1234567890,
+                                            "ErrorCode": 400,
+                                            "ErrorMessage": "=$error.message"
+                                        }
+                                    }
+                                },
+                                "schemas": {
+                                    "input": {
+                                        "input": {
+                                            "type": "json",
+                                            "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "id": "Return",
+                            "name": "Return",
+                            "description": "Simple Return Activity",
+                            "activity": {
+                                "ref": "#actreturn",
+                                "settings": {
+                                    "mappings": {
+                                        "Success": "=false",
+                                        "ErrorCode": 400,
+                                        "Message": "=string.concat(\"Deployer::Deploy F1 Descriptor - \", $error.message)"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "links": [
+                        {
+                            "id": 5,
+                            "from": "LogF1DeployError",
+                            "to": "DeployF1DescriptorErrorReport",
+                            "type": "default"
+                        },
+                        {
+                            "id": 6,
+                            "from": "DeployF1DescriptorErrorReport",
+                            "to": "Return",
+                            "type": "default"
+                        }
+                    ]
+                },
                 "metadata": {
                     "input": [
                         {
@@ -3722,33 +4240,25 @@
                     {
                         "id": 2,
                         "from": "HTTPClient",
-                        "to": "CheckRegisteredDeployments",
+                        "to": "TableQuery",
+                        "type": "default"
+                    },
+                    {
+                        "id": 3,
+                        "from": "HTTPClient",
+                        "to": "DockerMonitorActivity",
                         "type": "expression",
                         "label": "HTTPClienttoDockerMonitorActivity",
                         "value": "true==$activity[HTTPClient].Success"
                     },
                     {
-                        "id": 3,
-                        "from": "CheckRegisteredDeployments",
-                        "to": "ConstructDeployments",
-                        "type": "expression",
-                        "label": "CheckRegisteredDeployments to ConstructDeployments",
-                        "value": "true==$activity[CheckRegisteredDeployments].Success"
-                    },
-                    {
                         "id": 4,
-                        "from": "ConstructDeployments",
-                        "to": "DockerMonitorActivity",
-                        "type": "default"
-                    },
-                    {
-                        "id": 5,
                         "from": "DockerMonitorActivity",
                         "to": "LogDeployments",
                         "type": "default"
                     },
                     {
-                        "id": 6,
+                        "id": 5,
                         "from": "LogDeployments",
                         "to": "DeploymentStatusReport",
                         "type": "default"
@@ -3808,8 +4318,7 @@
                                 "timeout": "500",
                                 "leftToken": "%",
                                 "rightToken": "%",
-                                "variablesDef": "[{\"Name\":\"ServiceLocatorIP\",\"Type\":\"String\"},{\"Name\":\"ServiceType\",\"Type\":\"String\"}]",
-                                "httpHeaders": ""
+                                "variablesDef": "[{\"Name\":\"ServiceLocatorIP\",\"Type\":\"String\"},{\"Name\":\"ServiceType\",\"Type\":\"String\"}]"
                             },
                             "input": {
                                 "URL": "http://%ServiceLocatorIP%:10080/f1/locator/register/%ServiceType%",
@@ -3844,82 +4353,118 @@
                         }
                     },
                     {
-                        "id": "CheckRegisteredDeployments",
-                        "name": "CheckRegisteredDeployments",
-                        "description": "This activity build docker image from Dockerfile",
+                        "id": "TableQuery",
+                        "name": "TableQuery",
+                        "description": "A simple activity for quering data from table",
                         "activity": {
-                            "ref": "#httpclient",
+                            "ref": "#tablequery",
                             "settings": {
-                                "method": "GET",
-                                "timeout": "1000",
-                                "urlMappingString": "",
-                                "urlMapping": "",
-                                "leftToken": "%",
-                                "rightToken": "%",
-                                "variablesDef": "[{\"Name\":\"ServiceLocatorIP\",\"Type\":\"String\"},{\"Name\":\"Location\",\"Type\":\"String\"}]",
-                                "httpHeaders": ""
+                                "Table": {
+                                    "id": "9e35d4b0-6eeb-11eb-90dc-41e63340b2bf",
+                                    "type": "flogo:connector",
+                                    "version": "1.0.0",
+                                    "name": "tibco-simple-table",
+                                    "hashTags": [],
+                                    "inputMappings": {},
+                                    "outputMappings": {},
+                                    "iteratorMappings": {},
+                                    "title": "Simple Table",
+                                    "description": "This is URL file reader",
+                                    "ref": "github.com/SteveNY-Tibco/labs-lightcrane-contrib/connector/simpletable",
+                                    "settings": [
+                                        {
+                                            "name": "name",
+                                            "type": "string",
+                                            "required": true,
+                                            "display": {
+                                                "name": "Table Name",
+                                                "description": "Name of the table instance"
+                                            },
+                                            "value": "AirTask"
+                                        },
+                                        {
+                                            "name": "description",
+                                            "type": "string",
+                                            "display": {
+                                                "name": "Description",
+                                                "description": "A simple table for storing tuple"
+                                            },
+                                            "value": ""
+                                        },
+                                        {
+                                            "name": "schema",
+                                            "type": "array",
+                                            "required": true,
+                                            "display": {
+                                                "name": "Table Schema",
+                                                "description": "Schema of the table",
+                                                "type": "table",
+                                                "schema": "{\r\n    \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n    \"definitions\": {},\r\n    \"id\": \"http://example.com/example.json\",\r\n    \"items\": {\r\n        \"id\": \"/items\",\r\n        \"properties\": {\r\n            \"Name\": {\r\n                \"id\": \"/items/properties/Name\",\r\n                \"type\": \"string\"\r\n            },\r\n            \"Type\": {\r\n                \"id\": \"/items/properties/Type\",\r\n                \"type\": {\"enum\":[\"String\", \"Integer\", \"Long\", \"Double\", \"Boolean\", \"Date\", \"Object\"]}\r\n            },\r\n            \"IsKey\": {\r\n                \"id\": \"/items/properties/IsKey\",\r\n                \"type\": {\"enum\":[\"no\", \"yes\"]}\r\n            },\r\n            \"Indexed\": {\r\n                \"id\": \"/items/properties/Indexed\",\r\n                \"type\": {\"enum\":[\"no\", \"yes\"]}\r\n            }\r\n        },\r\n        \"type\": \"object\"\r\n    },\r\n    \"type\": \"array\"\r\n}"
+                                            },
+                                            "value": "[{\"Name\":\"ProjectID\",\"Type\":\"String\",\"IsKey\":\"yes\",\"Indexed\":\"no\"},{\"Name\":\"Name\",\"Type\":\"String\",\"IsKey\":\"yes\",\"Indexed\":\"no\"},{\"Name\":\"Data\",\"Type\":\"Object\",\"IsKey\":\"no\",\"Indexed\":\"no\"},{\"Name\":\"Status\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"no\"},{\"Name\":\"LastModified\",\"Type\":\"Long\",\"IsKey\":\"no\",\"Indexed\":\"no\"},{\"Name\":\"ErrorCode\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"no\"},{\"Name\":\"ErrorMessage\",\"Type\":\"String\",\"IsKey\":\"no\",\"Indexed\":\"no\"}]"
+                                        }
+                                    ],
+                                    "outputs": [],
+                                    "inputs": [],
+                                    "handler": {
+                                        "settings": []
+                                    },
+                                    "reply": [],
+                                    "s3Prefix": "flogo",
+                                    "key": "flogo/GraphBuilder_Tools/connector/simpletable/connector.json",
+                                    "display": {
+                                        "description": "This is URL file reader",
+                                        "category": "GraphBuilder_Tools",
+                                        "visible": true,
+                                        "smallIcon": "simpletable.png"
+                                    },
+                                    "actions": [
+                                        {
+                                            "name": "create",
+                                            "display": {
+                                                "name": "Create",
+                                                "readonly": false,
+                                                "valid": true,
+                                                "visible": true
+                                            }
+                                        }
+                                    ],
+                                    "feature": {},
+                                    "loopType": "none",
+                                    "loopSettings": [],
+                                    "retrySettings": [],
+                                    "propertyMap": {},
+                                    "keyfield": "name",
+                                    "schemaMap": {},
+                                    "iteratorAccumulate": false,
+                                    "isValid": true,
+                                    "lastUpdatedTime": 1636482504177,
+                                    "user": "flogo",
+                                    "connectorName": "AirTask",
+                                    "connectorDescription": " "
+                                },
+                                "Indices": "ProjectID"
                             },
                             "input": {
-                                "URL": "http://%ServiceLocatorIP%:10080/f1/locator/locationservices/%Location%/deployment",
-                                "Body": "",
-                                "SkipCondition": false,
-                                "Variables": {
+                                "QueryKey": {
                                     "mapping": {
-                                        "ServiceLocatorIP": "=$property[\"System.ServiceLocatorIP\"]",
-                                        "Location": "localhost"
+                                        "ProjectID": "*"
                                     }
                                 }
                             },
                             "schemas": {
                                 "input": {
-                                    "Variables": {
+                                    "QueryKey": {
                                         "type": "json",
-                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ServiceLocatorIP\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"}}}",
-                                        "fe_metadata": "{\"ServiceLocatorIP\":\"2\",\"Location\":\"2\"}"
+                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ProjectID\":{\"type\":\"string\"}}}",
+                                        "fe_metadata": "{\"ProjectID\":\"2\"}"
                                     }
                                 },
-                                "settings": {
-                                    "variablesDef": {
-                                        "type": "json",
-                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"Name\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"}},\"required\":[\"Name\",\"Type\"]}}",
-                                        "fe_metadata": "[{\"Name\":\"ServiceLocatorIP\",\"Type\":\"String\"},{\"Name\":\"Location\",\"Type\":\"String\"}]"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "id": "ConstructDeployments",
-                        "name": "ConstructDeployments",
-                        "description": "JSON Deserializer Activity",
-                        "activity": {
-                            "ref": "#jsondeserializer",
-                            "settings": {
-                                "schemaFromfile": false,
-                                "sample": "",
-                                "dataSample": {
-                                    "metadata": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Response\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{\"Domain\":{\"type\":\"string\"},\"ID\":{\"type\":\"string\"},\"LastModified\":{\"type\":\"number\"},\"Name\":{\"type\":\"string\"},\"Reporter\":{\"type\":\"string\"},\"Status\":{\"type\":\"string\"}}},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"}}}}}}",
-                                    "value": "",
-                                    "fe_metadata": "{\n    \"Response\": [\n        {\n            \"ID\": \"Air-account_00001_edgex_mqtt_mqtt_fs\",\n            \"Location\": \"localhost\",\n            \"Properties\": {\n                \"Domain\": \"Air-account_00001\",\n                \"ID\": \"Air-account_00001_edgex_mqtt_mqtt_fs\",\n                \"LastModified\": 1637709319,\n                \"Name\": \"edgex_mqtt_mqtt_fs\",\n                \"Reporter\": \"Deployer\",\n                \"Status\": \"Up About an hour\"\n            },\n            \"Type\": \"deployment\",\n            \"URL\": \"http://toDeployment\"\n        }\n    ]\n}"
-                                },
-                                "defaultValue": ""
-                            },
-                            "input": {
-                                "JSONString": "=$activity[CheckRegisteredDeployments].Data"
-                            },
-                            "schemas": {
                                 "output": {
                                     "Data": {
                                         "type": "json",
-                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Response\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{\"Domain\":{\"type\":\"string\"},\"ID\":{\"type\":\"string\"},\"LastModified\":{\"type\":\"number\"},\"Name\":{\"type\":\"string\"},\"Reporter\":{\"type\":\"string\"},\"Status\":{\"type\":\"string\"}}},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"}}}}}}",
-                                        "fe_metadata": "{\"Response\":[{\"ID\":\"Air-account_00001_edgex_mqtt_mqtt_fs\",\"Location\":\"localhost\",\"Properties\":{\"Domain\":\"Air-account_00001\",\"ID\":\"Air-account_00001_edgex_mqtt_mqtt_fs\",\"LastModified\":1637709319,\"Name\":\"edgex_mqtt_mqtt_fs\",\"Reporter\":\"Deployer\",\"Status\":\"Up About an hour\"},\"Type\":\"deployment\",\"URL\":\"http://toDeployment\"}]}"
-                                    }
-                                },
-                                "settings": {
-                                    "dataSample": {
-                                        "type": "json",
-                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Response\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{\"Domain\":{\"type\":\"string\"},\"ID\":{\"type\":\"string\"},\"LastModified\":{\"type\":\"number\"},\"Name\":{\"type\":\"string\"},\"Reporter\":{\"type\":\"string\"},\"Status\":{\"type\":\"string\"}}},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"}}}}}}",
-                                        "fe_metadata": "{\n    \"Response\": [\n        {\n            \"ID\": \"Air-account_00001_edgex_mqtt_mqtt_fs\",\n            \"Location\": \"localhost\",\n            \"Properties\": {\n                \"Domain\": \"Air-account_00001\",\n                \"ID\": \"Air-account_00001_edgex_mqtt_mqtt_fs\",\n                \"LastModified\": 1637709319,\n                \"Name\": \"edgex_mqtt_mqtt_fs\",\n                \"Reporter\": \"Deployer\",\n                \"Status\": \"Up About an hour\"\n            },\n            \"Type\": \"deployment\",\n            \"URL\": \"http://toDeployment\"\n        }\n    ]\n}"
+                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"ProjectID\":{\"type\":\"string\"},\"Name\":{\"type\":\"string\"},\"Data\":{\"type\":\"object\",\"properties\":{}},\"Status\":{\"type\":\"string\"},\"LastModified\":{\"type\":\"number\"},\"ErrorCode\":{\"type\":\"string\"},\"ErrorMessage\":{\"type\":\"string\"}}}}",
+                                        "fe_metadata": "[{\"ProjectID\":\"2\",\"Name\":\"2\",\"Data\":{},\"Status\":\"2\",\"LastModified\":2,\"ErrorCode\":\"2\",\"ErrorMessage\":\"2\"}]"
                                     }
                                 }
                             }
@@ -3935,8 +4480,7 @@
                                 "id": "Lightcrane01"
                             },
                             "input": {
-                                "now": 9876543210,
-                                "currentDeployments": "=$activity[ConstructDeployments].Data.Response"
+                                "now": 1234567890
                             }
                         }
                     },
@@ -3944,12 +4488,17 @@
                         "id": "LogDeployments",
                         "name": "LogDeployments",
                         "description": "Simple Log Message Activity",
+                        "type": "iterator",
+                        "settings": {
+                            "iterate": "=$activity[DockerMonitorActivity].data",
+                            "accumulate": false
+                        },
                         "activity": {
                             "ref": "#log",
                             "input": {
                                 "Log Level": "INFO",
                                 "flowInfo": false,
-                                "message": "=string.concat(\"%%%%% Deployer:Deployment Monitor %%%%% data : \", coerce.toString($activity[DockerMonitorActivity].data))"
+                                "message": "=coerce.toString($iteration[value])"
                             }
                         }
                     },
@@ -3965,22 +4514,20 @@
                         "activity": {
                             "ref": "#subflow",
                             "settings": {
-                                "flowURI": "res://flow:UpdateDeployment"
+                                "flowURI": "res://flow:StatusReport"
                             },
                             "input": {
-                                "ID": "=f1.getsubobject($iteration[value], \"ID\")",
+                                "ID": "=$iteration[value].ID",
                                 "Type": "deployment",
-                                "URL": "na",
-                                "Properties": "=$iteration[value]",
-                                "Delete": "=f1.getsubobject($iteration[value], \"Delete\")",
-                                "Location": "=f1.getsubobject($iteration[value], \"Location\")"
+                                "URL": "http://toDeployment",
+                                "Properties": "=$iteration[value]"
                             },
                             "schemas": {
                                 "input": {
                                     "input": {
                                         "type": "json",
-                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Delete\":{\"type\":\"boolean\"},\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}",
-                                        "fe_metadata": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Delete\":{\"type\":\"boolean\"},\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}"
+                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}",
+                                        "fe_metadata": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}"
                                     }
                                 }
                             }
@@ -4002,36 +4549,15 @@
             }
         },
         {
-            "id": "flow:UpdateDeployment",
+            "id": "flow:StatusReport",
             "data": {
-                "name": "UpdateDeployment",
+                "name": "StatusReport",
                 "description": "",
                 "links": [
                     {
                         "id": 1,
                         "from": "BuildDeploymentInfo",
-                        "to": "LogUpdateDeployment",
-                        "type": "expression",
-                        "label": "BuildDeploymentInfotoPublishDeploymentStatus",
-                        "value": "false==$flow.Delete"
-                    },
-                    {
-                        "id": 2,
-                        "from": "LogUpdateDeployment",
                         "to": "PublishDeploymentStatus",
-                        "type": "default"
-                    },
-                    {
-                        "id": 3,
-                        "from": "BuildDeploymentInfo",
-                        "to": "LogDeleteDeployment",
-                        "type": "exprOtherwise",
-                        "label": "BuildDeploymentInfo to DeleteDeployment"
-                    },
-                    {
-                        "id": 4,
-                        "from": "LogDeleteDeployment",
-                        "to": "DeleteDeployment",
                         "type": "default"
                     }
                 ],
@@ -4046,9 +4572,9 @@
                                 "schemaFromfile": false,
                                 "sample": "",
                                 "dataSample": {
-                                    "metadata": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}",
+                                    "metadata": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}",
                                     "value": "",
-                                    "fe_metadata": "{\n    \"ID\": \"\",\n    \"Type\": \"\",\n    \"Location\": \"\",\n    \"URL\": \"\",\n    \"Properties\": {}\n}"
+                                    "fe_metadata": "{\n    \"ID\": \"\",\n    \"Type\": \"\",\n    \"URL\": \"\",\n    \"Properties\": {}\n}"
                                 }
                             },
                             "input": {
@@ -4057,8 +4583,7 @@
                                         "ID": "=$flow.ID",
                                         "Type": "=$flow.Type",
                                         "URL": "=$flow.URL",
-                                        "Properties": "=$flow.Properties",
-                                        "Location": "=$flow.Location"
+                                        "Properties": "=$flow.Properties"
                                     }
                                 }
                             },
@@ -4066,30 +4591,17 @@
                                 "input": {
                                     "Data": {
                                         "type": "json",
-                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}",
-                                        "fe_metadata": "{\"ID\":\"\",\"Type\":\"\",\"Location\":\"\",\"URL\":\"\",\"Properties\":{}}"
+                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}",
+                                        "fe_metadata": "{\"ID\":\"\",\"Type\":\"\",\"URL\":\"\",\"Properties\":{}}"
                                     }
                                 },
                                 "settings": {
                                     "dataSample": {
                                         "type": "json",
-                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}",
-                                        "fe_metadata": "{\n    \"ID\": \"\",\n    \"Type\": \"\",\n    \"Location\": \"\",\n    \"URL\": \"\",\n    \"Properties\": {}\n}"
+                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}",
+                                        "fe_metadata": "{\n    \"ID\": \"\",\n    \"Type\": \"\",\n    \"URL\": \"\",\n    \"Properties\": {}\n}"
                                     }
                                 }
-                            }
-                        }
-                    },
-                    {
-                        "id": "LogUpdateDeployment",
-                        "name": "LogUpdateDeployment",
-                        "description": "Simple Log Message Activity",
-                        "activity": {
-                            "ref": "#log",
-                            "input": {
-                                "Log Level": "INFO",
-                                "flowInfo": false,
-                                "message": "=string.concat(\"%%%%% Deployer:Update Deployment %%%%% Request To LightcraneService : ID : \", $flow.ID, \", Type : \", $flow.Type, \", Location : \", $flow.Location, \", URL : \", $flow.URL, \", Delete : \", coerce.toString($flow.Delete), \", Properties : \", coerce.toString($flow.Properties))"
                             }
                         }
                     },
@@ -4114,66 +4626,7 @@
                                 "Variables": {
                                     "mapping": {
                                         "ServiceLocatorIP": "=$property[\"System.ServiceLocatorIP\"]",
-                                        "ServiceType": "=$flow.Type"
-                                    }
-                                }
-                            },
-                            "output": {
-                                "Success": false
-                            },
-                            "schemas": {
-                                "input": {
-                                    "Variables": {
-                                        "type": "json",
-                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ServiceLocatorIP\":{\"type\":\"string\"},\"ServiceType\":{\"type\":\"string\"}}}",
-                                        "fe_metadata": "{\"ServiceLocatorIP\":\"2\",\"ServiceType\":\"2\"}"
-                                    }
-                                },
-                                "settings": {
-                                    "variablesDef": {
-                                        "type": "json",
-                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"Name\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"}},\"required\":[\"Name\",\"Type\"]}}",
-                                        "fe_metadata": "[{\"Name\":\"ServiceLocatorIP\",\"Type\":\"String\"},{\"Name\":\"ServiceType\",\"Type\":\"String\"}]"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "id": "LogDeleteDeployment",
-                        "name": "LogDeleteDeployment",
-                        "description": "Simple Log Message Activity",
-                        "activity": {
-                            "ref": "#log",
-                            "input": {
-                                "Log Level": "INFO",
-                                "flowInfo": false,
-                                "message": "=string.concat(\"%%%%% Deployer:Delete Deployment %%%%% Request To LightcraneService : ID : \", $flow.ID, \", Type : \", $flow.Type, \", Location : \", $flow.Location, \", URL : \", $flow.URL, \", Delete : \", coerce.toString($flow.Delete), \", Properties : \", coerce.toString($flow.Properties))"
-                            }
-                        }
-                    },
-                    {
-                        "id": "DeleteDeployment",
-                        "name": "DeleteDeployment",
-                        "description": "This activity build docker image from Dockerfile",
-                        "activity": {
-                            "ref": "#httpclient",
-                            "settings": {
-                                "method": "POST",
-                                "timeout": "500",
-                                "leftToken": "%",
-                                "rightToken": "%",
-                                "variablesDef": "[{\"Name\":\"ServiceLocatorIP\",\"Type\":\"String\"},{\"Name\":\"ServiceType\",\"Type\":\"String\"}]",
-                                "httpHeaders": ""
-                            },
-                            "input": {
-                                "URL": "http://%ServiceLocatorIP%:10080/f1/locator/unregister/%ServiceType%",
-                                "Body": "=$activity[BuildDeploymentInfo].JSONString",
-                                "SkipCondition": false,
-                                "Variables": {
-                                    "mapping": {
-                                        "ServiceLocatorIP": "=$property[\"System.ServiceLocatorIP\"]",
-                                        "ServiceType": "=$flow.Type"
+                                        "ServiceType": "deployment"
                                     }
                                 }
                             },
@@ -4202,19 +4655,11 @@
                 "metadata": {
                     "input": [
                         {
-                            "name": "Delete",
-                            "type": "boolean"
-                        },
-                        {
                             "name": "ID",
                             "type": "string"
                         },
                         {
                             "name": "Type",
-                            "type": "string"
-                        },
-                        {
-                            "name": "Location",
                             "type": "string"
                         },
                         {
@@ -4226,10 +4671,7 @@
                             "type": "object"
                         }
                     ],
-                    "output": [],
-                    "fe_metadata": {
-                        "input": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Delete\":{\"type\":\"boolean\"},\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}"
-                    }
+                    "output": []
                 }
             }
         },
@@ -4508,22 +4950,20 @@
                         "activity": {
                             "ref": "#subflow",
                             "settings": {
-                                "flowURI": "res://flow:UpdateDeployment"
+                                "flowURI": "res://flow:StatusReport"
                             },
                             "input": {
                                 "Properties": "=$flow.Event.SystemEnvironment",
                                 "URL": "",
                                 "Type": "deployment",
-                                "ID": "Air",
-                                "Delete": false,
-                                "Location": "=f1.ternary(\"\"==coerce.toString(f1.getsubobject($flow.Event.SystemEnvironment, \"TargetServer\")), \"localhost\", \"remotehost\")"
+                                "ID": "Air"
                             },
                             "schemas": {
                                 "input": {
                                     "input": {
                                         "type": "json",
-                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Delete\":{\"type\":\"boolean\"},\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}",
-                                        "fe_metadata": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Delete\":{\"type\":\"boolean\"},\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"Location\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}"
+                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}",
+                                        "fe_metadata": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"ID\":{\"type\":\"string\"},\"Type\":{\"type\":\"string\"},\"URL\":{\"type\":\"string\"},\"Properties\":{\"type\":\"object\",\"properties\":{}}}}"
                                     }
                                 }
                             }
@@ -4537,13 +4977,13 @@
                             "type": "object",
                             "schema": {
                                 "type": "json",
-                                "value": "{\"SystemEnvironment\":{\"type\":\"object\",\"properties\":{\"RSVPUrl\":{\"type\":\"string\"},\"TargetServer\":{\"type\":\"string\"}}},\"Successful\":{\"type\":\"boolean\"},\"ErrorMsg\":{\"type\":\"string\"}}"
+                                "value": "{\"SystemEnvironment\":{\"type\":\"object\",\"properties\":{\"RSVPUrl\":{\"type\":\"string\"}}},\"Successful\":{\"type\":\"boolean\"},\"ErrorMsg\":{\"type\":\"string\"}}"
                             }
                         }
                     ],
                     "output": [],
                     "fe_metadata": {
-                        "input": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Event\":{\"type\":\"object\",\"properties\":{\"SystemEnvironment\":{\"type\":\"object\",\"properties\":{\"RSVPUrl\":{\"type\":\"string\"},\"TargetServer\":{\"type\":\"string\"}}},\"Successful\":{\"type\":\"boolean\"},\"ErrorMsg\":{\"type\":\"string\"}}}}}"
+                        "input": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"Event\":{\"type\":\"object\",\"properties\":{\"SystemEnvironment\":{\"type\":\"object\",\"properties\":{\"RSVPUrl\":{\"type\":\"string\"}}},\"Successful\":{\"type\":\"boolean\"},\"ErrorMsg\":{\"type\":\"string\"}}}}}"
                     }
                 }
             }
