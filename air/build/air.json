@@ -2159,7 +2159,7 @@
                                         "SkipCondition": false,
                                         "BuilderURL": "=$property[\"System.BuilderURL\"]",
                                         "PropertyNameDefFilename": "=$property[\"System.BaseFolder\"] + \"/projects/\" + $flow.ProjectID + \"/pipeline/\" + $flow.Name + \"_property_name_def.json\"",
-                                        "Location": "=f1.ternary(\"\"==coerce.toString(f1.getsubobject($flow.ScriptSystemEnv, \"TargetServer\")), \"localhost\", \"remotehost\")"
+                                        "Location": "=f1.ternary(\"\"==coerce.toString(f1.getsubobject($flow.ScriptSystemEnv, \"TargetServer\")), \"localhost\", coerce.toString(f1.getsubobject($flow.ScriptSystemEnv, \"TargetServer\")))"
                                     }
                                 }
                             },
@@ -5530,7 +5530,7 @@
                                         "DeployerURL": "=$property[\"System.DeployerURL\"]",
                                         "SkipCondition": false,
                                         "SyncDeploy": "=f1.ternary(null!=$flow.SyncDeploy, $flow.SyncDeploy, false)",
-                                        "Location": "=f1.ternary(\"\"==coerce.toString(f1.getsubobject($flow.ScriptSystemEnv, \"TargetServer\")), \"localhost\", \"remotehost\")"
+                                        "Location": "=f1.ternary(\"\"==coerce.toString(f1.getsubobject($flow.ScriptSystemEnv, \"TargetServer\")), \"localhost\", coerce.toString(f1.getsubobject($flow.ScriptSystemEnv, \"TargetServer\")))"
                                     }
                                 }
                             },
@@ -5874,7 +5874,7 @@
                                         "SyncDeploy": "=f1.ternary(null!=$flow.SyncDeploy, $flow.SyncDeploy, false)",
                                         "ExtraProperties": "=coerce.toArray(f1.ternary(null!=$flow.AirDescriptor, $flow.AirDescriptor.extra, null))",
                                         "RuntimeProperties": "=coerce.toArray(f1.ternary(null!=$flow.AirDescriptor.dynamic, $flow.AirDescriptor.dynamic.properties, null))",
-                                        "Location": "=f1.ternary(\"\"==coerce.toString(f1.getsubobject($flow.ScriptSystemEnv, \"TargetServer\")), \"localhost\", \"remotehost\")"
+                                        "Location": "=f1.ternary(\"\"==coerce.toString(f1.getsubobject($flow.ScriptSystemEnv, \"TargetServer\")), \"localhost\", coerce.toString(f1.getsubobject($flow.ScriptSystemEnv, \"TargetServer\")))"
                                     }
                                 }
                             },
